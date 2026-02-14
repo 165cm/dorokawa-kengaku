@@ -28,8 +28,8 @@
   --text-muted:#8a8070;--text-dim:#5c554a;--glass:rgba(255,255,255,.04);
   --glass-border:rgba(255,255,255,.08);--glass-strong:rgba(255,255,255,.07);
 }
-html{scroll-behavior:smooth;font-size:16px}
-body{font-family:"Zen Kaku Gothic New",sans-serif;color:var(--text);line-height:1.8;background:var(--mud-dark);overflow-x:hidden}
+html{scroll-behavior:smooth;font-size:16px;overflow-x:hidden}
+body{font-family:"Zen Kaku Gothic New",sans-serif;color:var(--text);line-height:1.8;background:var(--mud-dark)}
 img{max-width:100%;height:auto}
 a{text-decoration:none;color:inherit}
 body::after{content:"";position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-size:128px 128px;opacity:.035;pointer-events:none;z-index:9999}
@@ -882,9 +882,14 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
 <script>
 // Scroll Reveal
 const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.05 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+  }, 3000);
+});
 
 // Shorts Lazy Load
 const shortsObs = new IntersectionObserver((entries) => {
