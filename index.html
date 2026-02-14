@@ -89,9 +89,16 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
 .about-tag[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--mud-dark);border:1px solid var(--clay);color:var(--clay-light);padding:6px 12px;border-radius:8px;font-size:.72rem;white-space:nowrap;z-index:10;pointer-events:none;animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(4px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 .about-visual{display:flex;justify-content:center;align-items:center}
-.about-avatar{position:relative;width:260px;height:300px}
-.about-avatar img{width:260px;height:260px;object-fit:cover;clip-path:url(#mud-clip);display:block}
-.mud-frame{position:absolute;top:-6px;left:-6px;width:272px;height:272px;pointer-events:none;z-index:1}
+.about-avatar{position:relative;width:520px;height:520px;display:flex;justify-content:center;align-items:center}
+.about-avatar img:not(.mud-splat){width:260px;height:260px;object-fit:cover;clip-path:url(#mud-clip);display:block}
+.mud-splat{position:absolute;pointer-events:none;z-index:2;opacity:0;transform:scale(0);object-fit:contain;height:auto}
+.about-avatar.splat-active .mud-splat{animation:splatIn .4s cubic-bezier(.2,.8,.3,1.2) forwards}
+.ms-1{width:150px;top:60px;right:90px;--r:22deg;animation-delay:0s!important}
+.ms-2{width:200px;top:70px;left:30px;--r:-30deg;animation-delay:.1s!important}
+.ms-3{width:180px;bottom:80px;right:55px;--r:52deg;animation-delay:.18s!important}
+.ms-4{width:110px;bottom:130px;left:115px;--r:-35deg;animation-delay:.25s!important}
+.ms-5{width:90px;top:75px;left:220px;--r:68deg;animation-delay:.32s!important}
+@keyframes splatIn{0%{opacity:0;transform:scale(0) rotate(var(--r,0deg))}65%{opacity:.75;transform:scale(1.2) rotate(var(--r,0deg))}100%{opacity:.7;transform:scale(1) rotate(var(--r,0deg))}}
 .uncle-art-sub{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:.7rem;color:var(--text-dim);letter-spacing:.1em;white-space:nowrap}
 .uncle-drip{position:absolute;bottom:-12px;width:8px;border-radius:0 0 4px 4px;background:var(--mud-mid);animation:drip 3s ease-in infinite}
 .uncle-drip:nth-child(3){left:40px;height:18px;animation-delay:0s}
@@ -220,9 +227,13 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
   .section{padding:72px 0}
   .about-grid{grid-template-columns:1fr;gap:40px}
   .about-visual{order:-1}
-  .about-avatar{width:200px;height:240px}
-  .about-avatar img{width:200px;height:200px}
-  .mud-frame{top:-5px;left:-5px;width:210px;height:210px}
+  .about-avatar{width:400px;height:400px}
+  .about-avatar img:not(.mud-splat){width:200px;height:200px}
+  .ms-1{width:115px;top:46px;right:70px}
+  .ms-2{width:54px;top:124px;left:82px}
+  .ms-3{width:92px;bottom:62px;right:66px}
+  .ms-4{width:42px;bottom:132px;left:90px}
+  .ms-5{width:70px;top:58px;left:155px}
   .philosophy-grid{grid-template-columns:1fr;gap:16px}
   .philosophy-card{padding:28px 24px}
   .scattered-container{gap:16px}
@@ -317,12 +328,12 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
               <path d="M0.50,0.01 C0.58,0.00 0.65,0.02 0.72,0.04 C0.78,0.06 0.83,0.05 0.87,0.09 C0.91,0.13 0.93,0.16 0.95,0.21 C0.97,0.26 0.99,0.31 0.99,0.37 C1.00,0.43 0.98,0.48 0.99,0.53 C1.00,0.58 0.99,0.63 0.98,0.68 C0.97,0.73 0.96,0.77 0.93,0.82 C0.90,0.86 0.87,0.90 0.83,0.93 C0.79,0.95 0.74,0.97 0.69,0.98 C0.64,0.99 0.58,1.00 0.52,0.99 C0.46,0.99 0.40,0.98 0.35,0.97 C0.29,0.96 0.24,0.94 0.19,0.91 C0.15,0.88 0.11,0.85 0.08,0.80 C0.05,0.75 0.04,0.70 0.03,0.65 C0.02,0.59 0.00,0.54 0.01,0.48 C0.01,0.42 0.00,0.37 0.02,0.31 C0.03,0.25 0.04,0.20 0.07,0.15 C0.10,0.11 0.14,0.08 0.19,0.06 C0.24,0.03 0.30,0.02 0.36,0.01 C0.42,0.00 0.44,0.01 0.50,0.01 Z"/>
             </clipPath>
           </defs></svg>
-          <svg class="mud-frame" viewBox="0 0 272 272" fill="none">
-            <path d="M136,5 C148,3 157,8 168,6 C179,4 186,10 196,16 C205,21 212,15 222,26 C230,34 226,42 234,52 C240,60 246,64 250,76 C254,88 250,94 252,106 C254,118 258,126 256,138 C254,150 252,156 254,166 C256,176 252,184 248,194 C244,202 242,206 236,214 C230,222 228,222 220,230 C212,236 208,236 198,242 C188,248 184,250 172,254 C160,258 154,256 142,256 C130,256 124,258 112,256 C100,252 94,248 86,242 C76,236 74,232 66,224 C58,216 56,210 50,202 C44,192 44,186 42,176 C40,166 38,160 38,148 C38,136 40,132 40,120 C40,108 38,102 40,92 C42,82 46,76 50,66 C54,58 58,52 64,44 C70,36 74,32 82,26 C90,20 96,20 106,14 C116,10 120,8 130,6 Z" stroke="var(--mud-mid)" stroke-width="7" opacity="0.5" stroke-linejoin="round"/>
-            <path d="M136,10 C147,8 155,12 166,10 C177,8 184,14 194,20 C203,26 210,20 220,30 C228,38 224,46 232,56 C238,64 244,68 248,80 C252,92 248,98 250,110 C252,122 256,130 254,142 C252,154 250,160 252,170 C254,180 250,188 246,196 C242,204 240,208 234,216 C228,224 226,224 218,230 C210,236 206,236 196,242 C186,248 182,250 170,252 C158,254 152,252 140,252 C128,252 122,254 110,252 C98,248 92,244 84,238 C74,232 72,228 64,220 C56,212 54,206 48,198 C42,188 42,182 40,172 C38,162 36,156 36,144 C36,132 38,128 38,116 C38,104 36,98 38,88 C40,78 44,72 48,62 C52,54 56,48 62,40 C68,32 72,28 80,22 C88,16 94,16 104,12 C114,8 118,10 130,8 Z" stroke="var(--mud)" stroke-width="4" opacity="0.65" stroke-linejoin="round"/>
-            <path d="M136,2 C150,0 160,6 172,4 C184,2 192,8 204,14 C214,20 220,12 232,24 C242,34 236,42 244,54 C250,64 256,68 260,82 C264,96 260,102 262,116 C264,130 268,136 266,150 C264,164 262,170 264,182 C266,192 262,200 256,210 C250,220 248,224 240,232 C232,240 230,238 220,246 C210,252 206,254 194,258 C182,262 176,260 162,262 C148,264 142,266 128,264 C114,262 108,258 96,252 C84,246 80,242 70,234 C60,226 58,220 52,210 C46,200 46,194 42,184 C38,174 34,168 34,156 C34,144 38,138 36,126 C34,114 32,108 36,96 C40,84 44,76 50,66 C56,56 58,50 66,42 C74,34 78,28 88,22 C98,14 102,14 114,8 C124,4 126,4 136,2 Z" stroke="var(--clay)" stroke-width="1.5" opacity="0.15" stroke-dasharray="6 14 3 10" stroke-linejoin="round"/>
-          </svg>
           <img src="images/icon-face.webp" alt="泥川見学" loading="lazy">
+          <img class="mud-splat ms-1" src="Splatoon/1.png" alt="">
+          <img class="mud-splat ms-2" src="Splatoon/3.png" alt="">
+          <img class="mud-splat ms-3" src="Splatoon/2.png" alt="">
+          <img class="mud-splat ms-4" src="Splatoon/1.png" alt="">
+          <img class="mud-splat ms-5" src="Splatoon/3.png" alt="">
         </div>
       </div>
     </div>
@@ -875,7 +886,7 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
-  <p class="footer-copy">&copy; 2026 泥川見学 / Dorokawa Kengaku</p>
+  <p class="footer-copy">&copy; 泥川見学 / Dorokawa Kengaku</p>
   <p class="footer-note">クアラルンプールより、泥だらけの愛を込めて</p>
 </footer>
 
@@ -890,6 +901,14 @@ window.addEventListener('load', () => {
     document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
   }, 3000);
 });
+
+// Mud Splat
+const avatar = document.querySelector('.about-avatar');
+if (avatar) {
+  new IntersectionObserver((entries, obs) => {
+    if (entries[0].isIntersecting) { avatar.classList.add('splat-active'); obs.disconnect(); }
+  }, { threshold: 0.3 }).observe(avatar);
+}
 
 // Shorts Lazy Load
 const shortsObs = new IntersectionObserver((entries) => {
